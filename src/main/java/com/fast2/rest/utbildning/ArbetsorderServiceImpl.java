@@ -38,7 +38,7 @@ public class ArbetsorderServiceImpl implements ArbetsorderService {
 	}
 
 	@Override
-	public Arbetsorder getPatient(long id) {
+	public Arbetsorder getArbetsorder(long id) {
 		if(arbetsorders.get(id)== null) {
 			throw new NotFoundException();
 			//throw new WebApplicationException(Response.Status.NOT_FOUND);

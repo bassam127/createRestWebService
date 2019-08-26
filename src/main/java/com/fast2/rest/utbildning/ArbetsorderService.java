@@ -30,7 +30,7 @@ public interface ArbetsorderService {
     
     @Path("/arbetsorder/{id}")
     @GET
-    Arbetsorder getPatient(@PathParam(value = "id") long id);
+    Arbetsorder getArbetsorder(@PathParam(value = "id") long id);
     
 
     /**
