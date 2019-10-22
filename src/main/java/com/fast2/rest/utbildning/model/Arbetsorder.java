@@ -9,7 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "arbetsorder")
 public class Arbetsorder {
-	  private long id;
+	 
+	    private long id;
 	    private String name;
 
 	    public long getId() {

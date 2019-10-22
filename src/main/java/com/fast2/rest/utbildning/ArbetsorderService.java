@@ -2,14 +2,18 @@ package com.fast2.rest.utbildning;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+
+import com.fast2.rest.exception.utbildning.BusinessException;
 import com.fast2.rest.utbildning.model.Arbetsorder;
 
 
@@ -21,6 +25,8 @@ import com.fast2.rest.utbildning.model.Arbetsorder;
  *
  */
 @Path("/arbetsorderservice")
+@Consumes("application/xml,application/json")
+@Produces("application/xml,application/json")
 public interface ArbetsorderService {
 
 
@@ -30,19 +36,18 @@ public interface ArbetsorderService {
     
     @Path("/arbetsorder/{id}")
     @GET
-    Arbetsorder getArbetsorder(@PathParam(value = "id") long id);
-    
+    Arbetsorder getArbetsorder(@PathParam(value = "id") long id) throws BusinessException;
 
     /**
      * good feature for fast2 use response which build in spring boot
      */
     @Path("/arbetsorder")
     @POST
-    Response creteArbetsorder(Arbetsorder patient);
+    Response creteArbetsorder(Arbetsorder arbetsorder);
     
     @Path("/arbetsorder")
     @PUT
-    Response updateArbetsorder(Arbetsorder patient);
+    Response updateArbetsorder(Arbetsorder arbetsorder) throws BusinessException ;
     
     @Path("/arbetsorder/{id}")
     @DELETE

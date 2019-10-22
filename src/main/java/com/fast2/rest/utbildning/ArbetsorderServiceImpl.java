@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.stereotype.Service;
 
+import com.fast2.rest.exception.utbildning.BusinessException;
 import com.fast2.rest.utbildning.model.Arbetsorder;
 
 @Service
@@ -38,10 +39,12 @@ public class ArbetsorderServiceImpl implements ArbetsorderService {
 	}
 
 	@Override
-	public Arbetsorder getArbetsorder(long id) {
+	public Arbetsorder getArbetsorder(long id) throws BusinessException {
 		if(arbetsorders.get(id)== null) {
-			throw new NotFoundException();
-			//throw new WebApplicationException(Response.Status.NOT_FOUND);
+			BusinessException businessException = new BusinessException();
+			businessException.setFriendlyMessage("Arbetsorder med " + id + " hittade ej");
+			businessException.setErrorCode(Response.Status.NOT_FOUND.getStatusCode());
+			throw businessException;
 		}
 		return arbetsorders.get(id);
 	}
@@ -55,13 +58,15 @@ public class ArbetsorderServiceImpl implements ArbetsorderService {
 	}
 
 	@Override
-	public Response updateArbetsorder(Arbetsorder Arbetsorder) {
-		Arbetsorder Currentpatient = arbetsorders.get(Arbetsorder.getId());
-		if (Currentpatient != null) {
-			arbetsorders.put(Currentpatient.getId(), Arbetsorder);
+	public Response updateArbetsorder(Arbetsorder Arbetsorder) throws BusinessException  {
+		Arbetsorder CurrentArbetsorder = arbetsorders.get(Arbetsorder.getId());
+		if (CurrentArbetsorder != null) {
+			arbetsorders.put(CurrentArbetsorder.getId(), Arbetsorder);
 			return Response.ok(Arbetsorder).build();
 		} else {
-			throw new BusinessException();
+			BusinessException businessException = new BusinessException();
+			businessException.setFriendlyMessage("Arbetsorder :" + Arbetsorder.getId() + " saknas");
+			throw businessException;	
 		}
 
 	}
